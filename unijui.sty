@@ -57,8 +57,17 @@
 % Aqui restauramos esse espaçamento para que funcione no modo article.
 % Desconta o \parskip para que o espaço antes do título fique igual ao espaço depois.
 % Sem isso: espaço_antes = \parskip + \beforechapskip > espaço_depois = \afterchapskip
-
 \renewcommand{\chapterheadstart}{\vspace{\dimexpr\beforechapskip-\parskip\relax}}
+
+
+% --- Customização do cabeçalho (apenas número da página) ---
+\makepagestyle{abntheadings}
+\makeevenhead{abntheadings}{\thepage}{}{}
+\makeoddhead{abntheadings}{}{}{\thepage}
+\makeheadrule{abntheadings}{\textwidth}{0pt}
+
+\makepagestyle{abntchapfirst}
+\makeoddhead{abntchapfirst}{}{}{\thepage}
 
 \renewcommand{\textual}{%
   \pagestyle{abntheadings}%
