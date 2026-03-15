@@ -1,0 +1,118 @@
+% ==============================================================================
+% CAPÍTULO 4 - DESENVOLVIMENTO
+% ==============================================================================
+
+\chapter{Desenvolvimento}
+\label{cap:desenvolvimento}
+
+Neste capítulo, você deve detalhar a execução do seu estágio e os resultados
+alcançados. As seções abaixo (Análise e Levantamento de Requisitos, Modelagem, Implementação e Resultados e Discussões) são apenas sugestões de organização; 
+você deve definir, juntamente com o seu orientador, as seções que melhor representem
+as atividades que você realmente desenvolveu. 
+O importante é que o texto seja descritivo e mostre a aplicação prática dos seus conhecimentos técnicos.
+
+%-------------------------------------------------
+% Análise e Levantamento de Requisitos
+%-------------------------------------------------
+\section{Análise e Levantamento de Requisitos}
+\label{sec:requisitos}
+
+Nesta seção, você deve descrever o que o sistema ou o projeto precisava resolver. Explique como você identificou essas necessidades (ex: reuniões com a equipe, entrevistas com usuários ou análise de sistemas antigos). É importante listar os principais Requisitos Funcionais (o que o sistema faz) e Requisitos Não Funcionais (regras de segurança, desempenho ou tecnologias obrigatórias), mostrando que você entendeu o problema antes de começar a solução.
+
+
+%-------------------------------------------------
+% Modelagem
+%-------------------------------------------------
+\section{Modelagem}
+\label{sec:modelagem}
+
+Nesta seção, você deve apresentar a estrutura técnica do que foi desenvolvido. 
+Utilize diagramas para representar o projeto, como o Diagrama de Classes, Diagrama de Casos 
+de Uso ou o Modelo Entidade-Relacionamento. O texto deve explicar o que 
+cada diagrama representa e como eles ajudaram na organização da lógica do sistema antes da 
+programação.
+
+Utilize Figuras para ilustrar interfaces do sistema, diagramas (como UML) ou fotos do ambiente.
+Lembre-se de sempre citar a fonte abaixo da imagem e referenciá-la no texto usando o comando 
+\texttt{\textbackslash autoref}. 
+Nos exemplos a seguir, a \autoref{fig:img-exemplo1} ilustra como citar uma imagem retirada de outro trabalho (externa), enquanto a \autoref{fig:img-exemplo2} demonstra como referenciar uma imagem criada por você especificamente para este relatório.
+
+\begin{figure}[htb]
+    \caption{\label{fig:img-exemplo1}Exemplo de Imagem}
+    \includegraphics[width=0.4\textwidth]{figuras/05-desenvolvimento/img-exemplo.png}
+    \legend{Fonte: Silva et. al (ano, p. xx).}
+\end{figure}
+
+
+
+\begin{figure}[htb]
+    \caption{\label{fig:img-exemplo2}Exemplo de Imagem}
+    \includegraphics[width=0.4\textwidth]{figuras/05-desenvolvimento/img-exemplo.png}
+    \legend{Fonte: Própria do autor (ano).}
+\end{figure}
+
+
+%-------------------------------------------------
+% Implementação
+%-------------------------------------------------
+\section{Implementação}
+\label{sec:implementacao}
+
+Descreva os detalhes da implementação do sistema, as decisões técnicas tomadas e as principais funcionalidades desenvolvidas.
+
+Para apresentar trechos de código, utilize o ambiente \texttt{lstlisting}. 
+Ao utilizá-lo, evite colar arquivos inteiros; prefira partes lógicas que demonstrem como você 
+resolveu um problema específico ou aplicou um padrão de projeto.
+
+Exemplo de inclusão de código-fonte:
+
+\begin{lstlisting}[language=Java, caption={Exemplo de código}, label={lst:exemplo}]
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+\end{lstlisting}
+
+%-------------------------------------------------
+% Resultados e Discussões
+%-------------------------------------------------
+\section{Resultados e Discussões}
+\label{sec:resultados}
+
+Apresente e discuta os resultados obtidos com o desenvolvimento do trabalho.
+
+Use Tabelas para dados numéricos ou estatísticos que não possuem linhas de fechamento lateral (seguindo as normas do IBGE). São ideais para apresentar resultados de testes de desempenho ou métricas comparativas.
+% Exemplo de inclusão de tabela:
+\begin{table}[htb]
+    \ABNTEXfontereduzida
+    \caption{Resultados dos testes}
+    \label{tab:resultados}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{Teste} & \textbf{Resultado Esperado} & \textbf{Resultado Obtido} \\
+        \midrule
+        Teste 1 & Aprovado & Aprovado \\
+        Teste 2 & Aprovado & Aprovado \\
+        Teste 3 & Aprovado & Reprovado \\
+        \bottomrule
+    \end{tabular}
+    \legend{Fonte: Silva et al. (ano, p. xx).}
+\end{table}
+
+
+O Quadro é indicado para informações textuais organizadas em colunas e possui todas as bordas fechadas. É perfeito para listar requisitos, comparar funcionalidades ou descrever itens de um planejamento.\\
+Exemplo de inclusão de quadro:
+\begin{quadro}[htb]
+    \caption{\label{qdr:exemplo}Exemplo de Quadro}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Item} & \textbf{Descrição} & \textbf{Valor} \\
+        \hline
+        Item 1 & Descrição 1 & R\$ 100,00 \\
+        \hline
+        Item 2 & Descrição 2 & R\$ 200,00 \\
+        \hline
+    \end{tabular}
+    \legend{Fonte: Própria do autor (ano).}
+\end{quadro}

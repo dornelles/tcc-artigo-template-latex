@@ -1,0 +1,300 @@
+%% =============================================================================
+%% Customizações do abnTeX2 para a Universidade Regional do Noroeste do
+%% Estado do Rio Grande do Sul - UNIJUÍ
+%%
+%% Template desenvolvido e mantido por Prof. Eldair F. Dornelles
+%% A versão mais atualizada deste template pode ser obtida no GitHub:
+%% https://github.com/dornelles/relatorio-de-estagio-template-latex
+%% Qualquer sugestão de melhoria será bem vinda, 
+%% Contato pelo e-mail: eldair.dornelles@unijui.edu.br
+%% =============================================================================
+
+% ==============================================================================
+% CONFIGURAÇÃO DE FONTE
+% ==============================================================================
+\usepackage{mathptmx} % Times New Roman
+% \usepackage{helvet} % Arial
+% \renewcommand{\familydefault}{\sfdefault} % sans serif
+
+% --- Forçar Times New Roman e Tamanho 12 em todos os títulos ---
+\renewcommand{\ABNTEXchapterfont}{\rmfamily\bfseries}
+\renewcommand{\ABNTEXchapterfontsize}{\normalsize}
+\renewcommand{\ABNTEXsectionfont}{\rmfamily}
+\renewcommand{\ABNTEXsectionfontsize}{\normalsize}
+\renewcommand{\ABNTEXsubsectionfont}{\rmfamily\bfseries}
+\renewcommand{\ABNTEXsubsectionfontsize}{\normalsize}
+\renewcommand{\ABNTEXsubsubsectionfont}{\rmfamily}
+\renewcommand{\ABNTEXsubsubsectionfontsize}{\normalsize}
+
+% --- Correções para manter a formatação caso seja usado como artigo (article) ---
+% Espaçamento antes/após títulos: equivale a "uma linha em branco de 1,5" (norma ABNT para artigos)
+\setlength{\beforechapskip}{1.5\baselineskip}
+\setlength{\afterchapskip}{1.5\baselineskip}
+\setbeforesecskip{1.5\baselineskip}
+\setaftersecskip{1.5\baselineskip}
+\setbeforesubsecskip{1.5\baselineskip}
+\setaftersubsecskip{1.5\baselineskip}
+\setbeforesubsubsecskip{1.5\baselineskip}
+\setaftersubsubsecskip{1.5\baselineskip}
+\setbeforeparaskip{1.5\baselineskip}
+\setafterparaskip{1.5\baselineskip}
+\renewcommand{\chaptitlefont}{\ABNTEXchapterfont\ABNTEXchapterfontsize}
+% O abntex2 esvazia \chapterheadstart, o que ignora \beforechapskip.
+% Aqui restauramos esse espaçamento para que funcione no modo article.
+\renewcommand{\chapterheadstart}{\vspace{\beforechapskip}}
+
+\renewcommand{\textual}{%
+  \pagestyle{abntheadings}%
+  \aliaspagestyle{chapter}{abntchapfirst}%
+  \nouppercaseheads%
+  \bookmarksetup{startatroot}% 
+}
+
+\AtBeginDocument{
+  \setlength\absleftindent{0cm}
+  \setlength\absrightindent{0cm}
+  \renewcommand{\abstracttextfont}{\normalfont\normalsize}
+  % Restaurar vinculação de numeração de capítulos e seções
+  \counterwithin{section}{chapter}
+  \counterwithin{figure}{chapter}
+  \counterwithin{table}{chapter}
+}
+
+% --- Formatação do Sumário (espelhar títulos do documento) ---
+
+% Capítulos: negrito (igual \ABNTEXchapterfont)
+\renewcommand{\cftchapterfont}{\rmfamily\bfseries}
+\renewcommand{\cftchapterpagefont}{\rmfamily\bfseries}
+% Seções: sem negrito, maiúsculas (igual \ABNTEXsectionfont + section=TITLE)
+\renewcommand{\cftsectionfont}{\rmfamily\mdseries\MakeUppercase}
+\renewcommand{\cftsectionpagefont}{\rmfamily}
+% Subseções: negrito (igual \ABNTEXsubsectionfont)
+\renewcommand{\cftsubsectionfont}{\rmfamily\bfseries}
+\renewcommand{\cftsubsectionpagefont}{\rmfamily\bfseries}
+
+% SubSubseções: negrito (igual \ABNTEXsubsectionfont)
+\renewcommand{\cftsubsubsectionfont}{\rmfamily\mdseries}
+\renewcommand{\cftsubsubsectionpagefont}{\rmfamily}
+
+
+
+
+% ==============================================================================
+% DEFINIÇÃO DO AMBIENTE QUADRO
+% ==============================================================================
+\newcommand{\quadroname}{Quadro}
+\newcommand{\listofquadrosname}{Lista de quadros}
+
+\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{\listofquadrosname}
+\newlistentry{quadro}{loq}{0}
+
+\counterwithout{quadro}{chapter}
+\renewcommand{\cftquadroname}{\quadroname\space}
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+\setfloatlocations{quadro}{hbtp}
+
+% --- Centralizar tabelas quadros e figuras ---
+\setfloatadjustment{quadro}{\centering}
+\setfloatadjustment{table}{\centering}
+\setfloatadjustment{figure}{\centering}
+
+% --- Fontes das legendas (Captions e Legends) em tamanho 10pt ---
+% Caption = título acima do float (memoir)
+\captionnamefont{\footnotesize}     % "Figura X –" em tamanho 10
+\captiontitlefont{\footnotesize}    % texto do título em tamanho 10
+
+% --- Espaçamento entre caption/legend e o conteúdo ---
+\setlength{\abovecaptionskip}{6pt}  % espaço acima do caption (entre texto e caption)
+\setlength{\belowcaptionskip}{4pt}  % espaço abaixo do caption (entre caption e conteúdo)
+
+% Legend = fonte abaixo do float (abnTeX2 usa \legend{})
+% Usa \centering em vez de \begin{center} para evitar espaço vertical extra
+\renewcommand{\legend}[1]{\par\vspace{4pt}{\centering\footnotesize #1\par}}
+
+% ==============================================================================
+% COMANDOS PARA INFORMAÇÕES DO TRABALHO
+% ==============================================================================
+% --- Orientador ---
+\renewcommand{\orientadorname}{Orientador(a):}
+
+% --- Data da banca (dia, mês, ano) ---
+\newcommand{\datadabanca}[3]{%
+  \def\imprimirdatadabanca{#1 de #2 de #3}%
+}
+
+% --- Professor da banca ---
+\newcommand{\professordabanca}[1]{#1}
+\renewcommand{\professordabanca}[1]{\def\imprimirprofessordabanca{#1}}
+
+% --- Campus ---
+\newcommand{\campus}[1]{#1}
+\renewcommand{\campus}[1]{\def\imprimircampus{\MakeUppercase{CAMPUS #1}}}
+
+% --- Curso ---
+\newcommand{\curso}[1]{%
+  \def\imprimirNomeDoCurso{#1}%
+  \def\imprimirCursoMaiusculo{CURSO DE \MakeUppercase{#1}}%
+}
+
+% % --- Data de aprovação ---
+% \newcommand{\dataaprovacao}[1]{#1}
+% \renewcommand{\dataaprovacao}[1]{\def\imprimirdataaprovacao{#1}}
+
+% --- Texto para ser adicionado após o preâmbulo na folha de aprovação ---
+\newcommand{\submetidoabanca}{, submetido à aprovação da banca examinadora composta pelos seguintes membros:}
+
+% --- Resumo em português ---
+\newcommand{\resumoemportugues}[1]{#1}
+\renewcommand{\resumoemportugues}[1]{\def\imprimirresumo{#1}}
+
+% --- Palavras-chave em português ---
+\newcommand{\palavraschaveemportugues}[1]{#1}
+\renewcommand{\palavraschaveemportugues}[1]{\def\imprimirpalavraschave{#1}}
+
+% --- Resumo em inglês ---
+\newcommand{\resumoemingles}[1]{#1}
+\renewcommand{\resumoemingles}[1]{\def\imprimirabstract{#1}}
+
+% --- Palavras-chave em inglês ---
+\newcommand{\palavraschaveemingles}[1]{#1}
+\renewcommand{\palavraschaveemingles}[1]{\def\imprimirkeywords{#1}}
+
+% --- Apresentação ---
+\newcommand{\textoapresentacao}[1]{#1}
+\renewcommand{\textoapresentacao}[1]{\def\imprimirapresentacao{#1}}
+
+\newenvironment{apresentacao}[1][Apresentação]{%
+   \PRIVATEbookmarkthis{#1}
+   \renewcommand{\abstractnamefont}{\chaptitlefont}
+   \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
+   \begin{abstract}
+}{\end{abstract}\PRIVATEclearpageifneeded}
+
+% ==============================================================================
+% EPÍGRAFE
+% ==============================================================================
+\newcommand{\inserirepigrafe}[2]{
+  \vspace*{\fill}
+  \hspace{.35\textwidth}
+  \begin{minipage}{.5\textwidth}
+  \SingleSpacing
+    \begin{flushright}
+      \textit{``#1''\\
+      (#2)}
+    \end{flushright}
+  \end{minipage}%
+}
+% ==============================================================================
+% CAPA
+% ==============================================================================
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \vspace*{-1cm}
+     % --- Cabeçalho: logo + instituição/curso ---
+    \begin{tabular}{p{4.5cm}p{\dimexpr\textwidth-4.5cm-2\tabcolsep\relax}}
+      \vspace{0pt}\includegraphics[width=4.5cm]{figuras/00-capa/logo_unijui.png} &
+      \begin{minipage}[t]{\dimexpr\textwidth-4.5cm-2\tabcolsep\relax}
+        \vspace{0pt}
+        \centering
+        \normalsize\MakeUppercase{\imprimirinstituicao}\\
+        \vspace{1.5mm}
+        \imprimirCursoMaiusculo
+      \end{minipage}
+    \end{tabular}
+    \par
+    \vspace{2.5cm}
+    \normalsize\MakeUppercase{\imprimirautor}
+    \par
+    \vspace{1.2cm}
+    \vfill
+    \normalsize\MakeUppercase{\imprimirtitulo}
+    \vfill \vfill \vfill
+    \normalsize\imprimirlocal\\[1mm]
+    \normalsize\imprimirdata
+    \par
+    \vspace*{1.25cm}
+    \end{capa}
+}
+
+% ==============================================================================
+% FOLHA DE ROSTO
+% ==============================================================================
+\makeatletter
+\renewcommand{\folhaderostocontent}{
+  \begin{center}
+    \vspace*{-1mm}
+    \normalsize\MakeUppercase{\imprimirautor}
+    \vspace*{5mm}
+    \vfill \vfill
+
+    \normalsize\MakeUppercase{\imprimirtitulo}
+ 
+    \vfill
+    \abntex@ifnotempty{\imprimirpreambulo}{%
+      \hspace{.35\textwidth}
+      \begin{minipage}{.5\textwidth}
+      \SingleSpacing
+      \imprimirpreambulo\unskip.
+      \end{minipage}%
+    }%
+    
+   \vspace*{2.2cm}
+   \hspace{.35\textwidth}
+   \begin{minipage}{.5\textwidth}
+   \SingleSpacing
+   \large\imprimirorientadorRotulo~\imprimirorientador
+   \end{minipage}%
+  
+   \vspace*{2cm}
+   \par
+   \vfill \vfill \vfill \vfill
+    
+    \normalsize\imprimirlocal\\[1mm]
+    \normalsize\imprimirdata
+    \par
+    \vspace*{8mm}
+  \end{center}
+}
+\makeatother
+
+% ==============================================================================
+% FOLHA DE APROVAÇÃO
+% ==============================================================================
+\makeatletter
+\newcommand{\imprimirfolhadabanca}{
+    \begin{center}
+        \normalsize\MakeUppercase{\imprimirautor}
+        \vspace*{\fill} \vspace*{\fill}
+        \begin{center}
+        \normalsize\MakeUppercase{\imprimirtitulo}
+        \end{center}
+        \vspace*{\fill}
+
+        \abntex@ifnotempty{\imprimirpreambulo}{%
+          \hspace{.35\textwidth}
+          \begin{minipage}{.5\textwidth}
+          \SingleSpacing
+          \imprimirpreambulo\unskip
+          \submetidoabanca
+          \end{minipage}%
+        }%
+        
+        \vspace*{1cm}
+         \large\assinatura{\imprimirorientador \\ Orientador(a)}
+        \vspace*{1.3cm}
+         \large\assinatura{\imprimirprofessordabanca \\ Membro da Banca}
+        \vspace*{3.5cm}
+        \normalsize\imprimirlocal, \imprimirdatadabanca
+        \par
+        \vspace*{1cm}
+    \end{center}
+    \newpage
+}
+\makeatother
+
+
+% ==============================================================================
+% FIM DAS CUSTOMIZAÇÕES PARA A UNIVERSIDADE UNIJUÍ
+% ==============================================================================
