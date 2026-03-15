@@ -222,37 +222,38 @@
 \begin{agradecimentos}
     Agradeço a todos que...
 \end{agradecimentos}
+\newpage
 
 % --- Epígrafe ---
 \begin{epigrafe}
     % O primeiro parâmetro recebe o texto da citação e o segundo o autor da mesma.
     \inserirepigrafe{A imaginação é mais importante que o conhecimento.}{Albert Einstein}
 \end{epigrafe}
-
+\newpage
 
 % --- Lista de ilustrações (só aparece se houver figuras) ---
 % Na primeira compilação os contadores podem ser 0; compile 2x para resultado correto.
-\regtotcounter{figure}
-\ifnum\totvalue{figure}>0
+\ifnum\totvalue{figcount}>0
     \pdfbookmark[0]{\listfigurename}{lof}
     \listoffigures*
     \cleardoublepage
+    \newpage
 \fi
 
 % --- Lista de quadros (só aparece se houver quadros) ---
-\regtotcounter{quadro}
-\ifnum\totvalue{quadro}>0
+\ifnum\totvalue{quacount}>0
     \pdfbookmark[0]{\listofquadrosname}{loq}
     \listofquadros*
     \cleardoublepage
+    \newpage
 \fi
 
 % --- Lista de tabelas (só aparece se houver tabelas) ---
-\regtotcounter{table}
-\ifnum\totvalue{table}>0
+\ifnum\totvalue{tabcount}>0
     \pdfbookmark[0]{\listtablename}{lot}
     \listoftables*
     \cleardoublepage
+    \newpage
 \fi
 
 % --- Lista de abreviaturas e siglas ---
@@ -278,14 +279,14 @@
 \begin{apresentacao}
     \imprimirapresentacao
 \end{apresentacao}
-
+\newpage
 % --- Resumo em português ---
 \begin{resumo}
     \imprimirresumo
     \par
     \noindent \textbf{Palavras-chave}: \imprimirpalavraschave
 \end{resumo}
-
+\newpage
 % ==========================================================================
 % ELEMENTOS TEXTUAIS
 % ==========================================================================

@@ -8,6 +8,20 @@
 %% Qualquer sugestão de melhoria será bem vinda, 
 %% Contato pelo e-mail: eldair.dornelles@unijui.edu.br
 %% =============================================================================
+\RequirePackage{etoolbox}
+
+% --- Contadores Globais para Listas ---
+% Necessários porque os contadores normais (figure, table) reiniciam em cada capítulo,
+% o que faz o pacote totcount retornar 0 se o último capítulo não tiver elementos.
+\newcounter{figcount} \regtotcounter{figcount}
+\newcounter{tabcount} \regtotcounter{tabcount}
+\newcounter{quacount} \regtotcounter{quacount}
+
+% Incrementar os contadores globais sempre que os respectivos ambientes forem usados
+\AtBeginEnvironment{figure}{\stepcounter{figcount}}
+\AtBeginEnvironment{table}{\stepcounter{tabcount}}
+\AtBeginEnvironment{quadro}{\stepcounter{quacount}}
+
 
 % ==============================================================================
 % CONFIGURAÇÃO DE FONTE
@@ -28,20 +42,23 @@
 
 % --- Correções para manter a formatação caso seja usado como artigo (article) ---
 % Espaçamento antes/após títulos: equivale a "uma linha em branco de 1,5" (norma ABNT para artigos)
-\setlength{\beforechapskip}{1.5\baselineskip}
-\setlength{\afterchapskip}{1.5\baselineskip}
+\setlength{\beforechapskip}{2\baselineskip}
+\setlength{\afterchapskip}{0.7\baselineskip}
 \setbeforesecskip{1.5\baselineskip}
-\setaftersecskip{1.5\baselineskip}
+\setaftersecskip{0.7\baselineskip}
 \setbeforesubsecskip{1.5\baselineskip}
-\setaftersubsecskip{1.5\baselineskip}
+\setaftersubsecskip{0.7\baselineskip}
 \setbeforesubsubsecskip{1.5\baselineskip}
-\setaftersubsubsecskip{1.5\baselineskip}
-\setbeforeparaskip{1.5\baselineskip}
-\setafterparaskip{1.5\baselineskip}
+\setaftersubsubsecskip{0.7\baselineskip}
+% \setbeforeparaskip{1.5\baselineskip}
+% \setafterparaskip{0.5\baselineskip}
 \renewcommand{\chaptitlefont}{\ABNTEXchapterfont\ABNTEXchapterfontsize}
 % O abntex2 esvazia \chapterheadstart, o que ignora \beforechapskip.
 % Aqui restauramos esse espaçamento para que funcione no modo article.
-\renewcommand{\chapterheadstart}{\vspace{\beforechapskip}}
+% Desconta o \parskip para que o espaço antes do título fique igual ao espaço depois.
+% Sem isso: espaço_antes = \parskip + \beforechapskip > espaço_depois = \afterchapskip
+
+\renewcommand{\chapterheadstart}{\vspace{\dimexpr\beforechapskip-\parskip\relax}}
 
 \renewcommand{\textual}{%
   \pagestyle{abntheadings}%
