@@ -59,6 +59,11 @@
 % Sem isso: espaço_antes = \parskip + \beforechapskip > espaço_depois = \afterchapskip
 \renewcommand{\chapterheadstart}{\vspace{\dimexpr\beforechapskip-\parskip\relax}}
 
+% --- Centralização dos títulos dos capítulos ---
+% \renewcommand{\printchapternum}{\centering\ABNTEXchapterfont\ABNTEXchapterfontsize\thechapter\space}
+% \renewcommand{\printchaptertitle}[1]{\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}}
+% \renewcommand{\printchapternonum}{\centering}
+
 
 % --- Customização do cabeçalho (apenas número da página) ---
 \makepagestyle{abntheadings}
@@ -80,10 +85,11 @@
   \setlength\absleftindent{0cm}
   \setlength\absrightindent{0cm}
   \renewcommand{\abstracttextfont}{\normalfont\normalsize}
-  % Restaurar vinculação de numeração de capítulos e seções
+  % Numeração sequencial para figuras, tabelas e quadros (sem o número do capítulo)
   \counterwithin{section}{chapter}
-  \counterwithin{figure}{chapter}
-  \counterwithin{table}{chapter}
+  \counterwithout{figure}{chapter}
+  \counterwithout{table}{chapter}
+  \counterwithout{quadro}{chapter}
 }
 
 % --- Formatação do Sumário (espelhar títulos do documento) ---
@@ -115,7 +121,8 @@
 \newlistof{listofquadros}{loq}{\listofquadrosname}
 \newlistentry{quadro}{loq}{0}
 
-\counterwithout{quadro}{chapter}
+
+%\counterwithout{quadro}{chapter}
 \renewcommand{\cftquadroname}{\quadroname\space}
 \renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
 \setfloatlocations{quadro}{hbtp}
