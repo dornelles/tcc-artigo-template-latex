@@ -223,9 +223,10 @@
 \renewcommand{\textoapresentacao}[1]{\def\imprimirapresentacao{#1}}
 
 \newenvironment{apresentacao}[1][Apresentação]{%
-  \chapter*[#1]{#1}
+  \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+  \chapter*[#1]{#1}
 }{}
 
 
