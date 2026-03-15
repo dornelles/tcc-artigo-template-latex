@@ -87,7 +87,6 @@
   \aliaspagestyle{chapter}{abntchapfirst}%
   \nouppercaseheads%
   \bookmarksetup{startatroot}% 
-  \setcounter{secnumdepth}{-1} % Garantir desativação da numeração textual
 }
 
 \AtBeginDocument{
@@ -101,7 +100,8 @@
   \counterwithout{quadro}{chapter}
 
   % Hiding all heading numbers in document (redundant but safe)
-  \setcounter{secnumdepth}{-1}
+  % Hiding all heading numbers in document (redundant but safe)
+  % \setcounter{secnumdepth}{-1}
   
   % Ocultar numeração apenas no Sumário (não afeta figuras/tabelas pois usam .lof/.lot)
   \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
@@ -223,26 +223,12 @@
 \renewcommand{\textoapresentacao}[1]{\def\imprimirapresentacao{#1}}
 
 \newenvironment{apresentacao}[1][Apresentação]{%
-   \clearpage % Garante nova página para que o contador de página esteja correto
-   \ifdef{\imprimirapresentacao}{%
-     \expandafter\ifstrempty\expandafter{\imprimirapresentacao}{%
-       \PRIVATEbookmarkthis{#1}% No hay texto: solo marcador
-     }{%
-       % Hay texto: Registrar en el Sumário (el marcador se crea solo)
-       \phantomsection
-       \ifthenelse{\boolean{ABNTEXupperchapter}}{%
-         \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}%
-       }{%
-         \addcontentsline{toc}{chapter}{#1}%
-       }%
-     }%
-   }{%
-     \PRIVATEbookmarkthis{#1}%
-   }%
-   \renewcommand{\abstractnamefont}{\chaptitlefont}
-   \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
-   \begin{abstract}
-}{\end{abstract}\clearpage}
+  \chapter*[#1]{#1}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+}{}
+
+
 
 % ==============================================================================
 % EPÍGRAFE
