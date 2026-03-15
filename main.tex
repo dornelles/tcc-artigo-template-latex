@@ -306,14 +306,8 @@
 
 % --- Referências bibliográficas ---
 \bibliography{referencias}
+\newpage
 
-% --- Apêndices ---
-\begin{apendicesenv}
-    % %Imprime uma página indicando o início dos apêndices
-    % \partapendices
-
-    \input{apendices/apendice-a}
-\end{apendicesenv}
 
 % --- Anexos ---
 \begin{anexosenv}
@@ -322,6 +316,15 @@
 
     \input{anexos/anexo-a}
 \end{anexosenv}
+\newpage
+
+% --- Apêndices ---
+\begin{apendicesenv}
+    % %Imprime uma página indicando o início dos apêndices
+    % \partapendices
+
+    \input{apendices/apendice-a}
+\end{apendicesenv}
 
 % --- Índice remissivo (opcional) ---
 % \phantompart

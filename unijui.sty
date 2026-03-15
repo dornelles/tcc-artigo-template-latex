@@ -59,10 +59,18 @@
 % Sem isso: espaço_antes = \parskip + \beforechapskip > espaço_depois = \afterchapskip
 \renewcommand{\chapterheadstart}{\vspace{\dimexpr\beforechapskip-\parskip\relax}}
 
-% --- Centralização dos títulos dos capítulos ---
-% \renewcommand{\printchapternum}{\centering\ABNTEXchapterfont\ABNTEXchapterfontsize\thechapter\space}
-% \renewcommand{\printchaptertitle}[1]{\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}}
-% \renewcommand{\printchapternonum}{\centering}
+% --- Centralização e ocultação do número nos títulos dos capítulos ---
+% O número continua existindo para fins de Seções (1.1, 1.2...), 
+% mas não é impresso no título do capítulo nem no Sumário.
+\renewcommand{\printchapternum}{}
+\renewcommand{\afterchapternum}{}
+\renewcommand{\printchaptertitle}[1]{%
+  \centering\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}%
+}
+\renewcommand{\printchapternonum}{\centering}
+
+% Remover número do capítulo do Sumário
+\renewcommand{\chapternumberline}[1]{}
 
 
 % --- Customização do cabeçalho (apenas número da página) ---
@@ -79,18 +87,34 @@
   \aliaspagestyle{chapter}{abntchapfirst}%
   \nouppercaseheads%
   \bookmarksetup{startatroot}% 
+  \setcounter{secnumdepth}{-1} % Garantir desativação da numeração textual
 }
 
 \AtBeginDocument{
   \setlength\absleftindent{0cm}
   \setlength\absrightindent{0cm}
   \renewcommand{\abstracttextfont}{\normalfont\normalsize}
-  % Numeração sequencial para figuras, tabelas e quadros (sem o número do capítulo)
+  
   \counterwithin{section}{chapter}
   \counterwithout{figure}{chapter}
   \counterwithout{table}{chapter}
   \counterwithout{quadro}{chapter}
+
+  % Hiding all heading numbers in document (redundant but safe)
+  \setcounter{secnumdepth}{-1}
+  
+  % Ocultar numeração apenas no Sumário (não afeta figuras/tabelas pois usam .lof/.lot)
+  \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
 }
+
+% --- Ocultação do número nos títulos dos capítulos ---
+\renewcommand{\printchapternum}{}
+\renewcommand{\chapternumberline}[1]{}
+\renewcommand{\afterchapternum}{}
+\renewcommand{\printchaptertitle}[1]{%
+  \centering\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}%
+}
+\renewcommand{\printchapternonum}{\centering}
 
 % --- Formatação do Sumário (espelhar títulos do documento) ---
 
