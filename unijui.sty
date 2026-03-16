@@ -52,17 +52,22 @@
 % --- Centralização de títulos de seção ---
 % Centraliza os títulos de seção principal para manter o estilo que os capítulos tinham
 \setsecheadstyle{\centering\ABNTEXsectionfont\ABNTEXsectionfontsize\ABNTEXsectionupperifneeded}
-\setsubsecheadstyle{\ABNTEXsubsectionfont\ABNTEXsubsectionfontsize\ABNTEXsubsectionupperifneeded}
+\setsubsecheadstyle{\ABNTEXsubsectionfont\ABNTEXsubsectionfontsize\MakeTextUppercase}
 \setsubsubsecheadstyle{\ABNTEXsubsubsectionfont\ABNTEXsubsubsectionfontsize\ABNTEXsubsubsectionupperifneeded}
 
-% Para ocultar o número apenas do título da seção principal (opcional, remova % se desejar):
-% \setsecnumformat{\ifstrequal{#1}{section}{}{\csname the#1\endcsname\quad}}
+% Para ocultar o número de todas as seções, subseções e subsubseções no texto:
+\setsecnumformat{}
 
-% Ocultar o número da seção no sumário (reproduzindo o comportamento antigo para capítulos):
-% \renewcommand{\cftsectionpresnum}{}
-% \renewcommand{\cftsectionaftersnum}{}
-% \setlength{\cftsectionnumwidth}{0pt}
-
+% Ocultar o número das seções no sumário
+\renewcommand{\cftsectionpresnum}{}
+\renewcommand{\cftsectionaftersnum}{}
+\setlength{\cftsectionnumwidth}{0pt}
+\renewcommand{\cftsubsectionpresnum}{}
+\renewcommand{\cftsubsectionaftersnum}{}
+\setlength{\cftsubsectionnumwidth}{0pt}
+\renewcommand{\cftsubsubsectionpresnum}{}
+\renewcommand{\cftsubsubsectionaftersnum}{}
+\setlength{\cftsubsubsectionnumwidth}{0pt}
 
 % --- Customização do cabeçalho (apenas número da página) ---
 \makepagestyle{abntheadings}
@@ -81,8 +86,8 @@
   \setlength\absrightindent{0cm}
   \renewcommand{\abstracttextfont}{\normalfont\normalsize}
   
-  % Ocultar toda numeração no Sumário, caso fosse o comportamento desejado antes:
-  % \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
+  % Ocultar numeração no Sumário globalmente (não afeta figuras/tabelas pois elas usam lof/lot)
+  \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
 }
 
 % --- Correção: formatação para apêndices e anexos num formato artigo ---
@@ -90,12 +95,13 @@
   % Em artigos abntex2 converte section para letras automaticamente,
   % mas garantimos a alteração aqui.
   \renewcommand{\thesection}{\Alph{section}}
-  % Ocultar Apendice A - e deixar só o título formatado
-  \setsecnumformat{\space\thesection\space--\space}
+  % Adicionar "Apêndice A" no título
+  \setsecnumformat{\appendixname~\thesection~--\space}
 }
 \AtBeginEnvironment{anexosenv}{
   \renewcommand{\thesection}{\Alph{section}}
-  \setsecnumformat{\space\thesection\space--\space}
+  % Adicionar "Anexo A" no título
+  \setsecnumformat{\anexoname~\thesection~--\space}
 }
 
 % --- Formatação do Sumário (espelhar títulos do documento) ---
@@ -235,6 +241,18 @@
   \addcontentsline{toc}{section}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
   \section*[#1]{#1}
 }{}
+
+
+% --- Referências (ajustes para nível de seção) ---
+\renewcommand{\bibsection}{%
+  \section*{\bibname}
+  \bibmark
+  \ifnobibintoc\else
+  \phantomsection
+  \addcontentsline{toc}{section}{\texorpdfstring{\MakeTextUppercase{\bibname}}{\bibname}}
+  \fi
+  \prebibhook
+}
 
 
 % ==============================================================================
