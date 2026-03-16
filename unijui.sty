@@ -31,46 +31,37 @@
 % \renewcommand{\familydefault}{\sfdefault} % sans serif
 
 % --- Forçar Times New Roman e Tamanho 12 em todos os títulos ---
-\renewcommand{\ABNTEXchapterfont}{\rmfamily\bfseries}
-\renewcommand{\ABNTEXchapterfontsize}{\normalsize}
-\renewcommand{\ABNTEXsectionfont}{\rmfamily}
+\renewcommand{\ABNTEXsectionfont}{\rmfamily\bfseries}
 \renewcommand{\ABNTEXsectionfontsize}{\normalsize}
-\renewcommand{\ABNTEXsubsectionfont}{\rmfamily\bfseries}
+\renewcommand{\ABNTEXsubsectionfont}{\rmfamily}
 \renewcommand{\ABNTEXsubsectionfontsize}{\normalsize}
-\renewcommand{\ABNTEXsubsubsectionfont}{\rmfamily}
+\renewcommand{\ABNTEXsubsubsectionfont}{\rmfamily\bfseries}
 \renewcommand{\ABNTEXsubsubsectionfontsize}{\normalsize}
+\renewcommand{\ABNTEXsubsubsubsectionfont}{\rmfamily}
+\renewcommand{\ABNTEXsubsubsubsectionfontsize}{\normalsize}
 
 % --- Correções para manter a formatação caso seja usado como artigo (article) ---
 % Espaçamento antes/após títulos: equivale a "uma linha em branco de 1,5" (norma ABNT para artigos)
-\setlength{\beforechapskip}{2\baselineskip}
-\setlength{\afterchapskip}{0.7\baselineskip}
-\setbeforesecskip{1.5\baselineskip}
+\setbeforesecskip{2\baselineskip}
 \setaftersecskip{0.7\baselineskip}
 \setbeforesubsecskip{1.5\baselineskip}
 \setaftersubsecskip{0.7\baselineskip}
 \setbeforesubsubsecskip{1.5\baselineskip}
 \setaftersubsubsecskip{0.7\baselineskip}
-% \setbeforeparaskip{1.5\baselineskip}
-% \setafterparaskip{0.5\baselineskip}
-\renewcommand{\chaptitlefont}{\ABNTEXchapterfont\ABNTEXchapterfontsize}
-% O abntex2 esvazia \chapterheadstart, o que ignora \beforechapskip.
-% Aqui restauramos esse espaçamento para que funcione no modo article.
-% Desconta o \parskip para que o espaço antes do título fique igual ao espaço depois.
-% Sem isso: espaço_antes = \parskip + \beforechapskip > espaço_depois = \afterchapskip
-\renewcommand{\chapterheadstart}{\vspace{\dimexpr\beforechapskip-\parskip\relax}}
 
-% --- Centralização e ocultação do número nos títulos dos capítulos ---
-% O número continua existindo para fins de Seções (1.1, 1.2...), 
-% mas não é impresso no título do capítulo nem no Sumário.
-\renewcommand{\printchapternum}{}
-\renewcommand{\afterchapternum}{}
-\renewcommand{\printchaptertitle}[1]{%
-  \centering\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}%
-}
-\renewcommand{\printchapternonum}{\centering}
+% --- Centralização de títulos de seção ---
+% Centraliza os títulos de seção principal para manter o estilo que os capítulos tinham
+\setsecheadstyle{\centering\ABNTEXsectionfont\ABNTEXsectionfontsize\ABNTEXsectionupperifneeded}
+\setsubsecheadstyle{\ABNTEXsubsectionfont\ABNTEXsubsectionfontsize\ABNTEXsubsectionupperifneeded}
+\setsubsubsecheadstyle{\ABNTEXsubsubsectionfont\ABNTEXsubsubsectionfontsize\ABNTEXsubsubsectionupperifneeded}
 
-% Remover número do capítulo do Sumário
-\renewcommand{\chapternumberline}[1]{}
+% Para ocultar o número apenas do título da seção principal (opcional, remova % se desejar):
+% \setsecnumformat{\ifstrequal{#1}{section}{}{\csname the#1\endcsname\quad}}
+
+% Ocultar o número da seção no sumário (reproduzindo o comportamento antigo para capítulos):
+% \renewcommand{\cftsectionpresnum}{}
+% \renewcommand{\cftsectionaftersnum}{}
+% \setlength{\cftsectionnumwidth}{0pt}
 
 
 % --- Customização do cabeçalho (apenas número da página) ---
@@ -79,12 +70,8 @@
 \makeoddhead{abntheadings}{}{}{\thepage}
 \makeheadrule{abntheadings}{\textwidth}{0pt}
 
-\makepagestyle{abntchapfirst}
-\makeoddhead{abntchapfirst}{}{}{\thepage}
-
 \renewcommand{\textual}{%
   \pagestyle{abntheadings}%
-  \aliaspagestyle{chapter}{abntchapfirst}%
   \nouppercaseheads%
   \bookmarksetup{startatroot}% 
 }
@@ -94,49 +81,34 @@
   \setlength\absrightindent{0cm}
   \renewcommand{\abstracttextfont}{\normalfont\normalsize}
   
-  \counterwithin{section}{chapter}
-  \counterwithout{figure}{chapter}
-  \counterwithout{table}{chapter}
-  \counterwithout{quadro}{chapter}
-  
-  % Ocultar numeração apenas no Sumário (não afeta figuras/tabelas pois usam .lof/.lot)
-  \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
+  % Ocultar toda numeração no Sumário, caso fosse o comportamento desejado antes:
+  % \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
 }
 
-% --- Ocultação do número nos títulos dos capítulos ---
-\renewcommand{\printchapternum}{}
-\renewcommand{\chapternumberline}[1]{}
-\renewcommand{\afterchapternum}{}
-\renewcommand{\printchaptertitle}[1]{%
-  \centering\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}%
-}
-\renewcommand{\printchapternonum}{\centering}
-
-% --- Correção: restaurar a formatação para apêndices e anexos ---
+% --- Correção: formatação para apêndices e anexos num formato artigo ---
 \AtBeginEnvironment{apendicesenv}{
-  \renewcommand{\printchapternum}{\space\thechapter}
-  \renewcommand{\afterchapternum}{\space--\space}
+  % Em artigos abntex2 converte section para letras automaticamente,
+  % mas garantimos a alteração aqui.
+  \renewcommand{\thesection}{\Alph{section}}
+  % Ocultar Apendice A - e deixar só o título formatado
+  \setsecnumformat{\space\thesection\space--\space}
 }
 \AtBeginEnvironment{anexosenv}{
-  \renewcommand{\printchapternum}{\space\thechapter}
-  \renewcommand{\afterchapternum}{\space--\space}
+  \renewcommand{\thesection}{\Alph{section}}
+  \setsecnumformat{\space\thesection\space--\space}
 }
 
 % --- Formatação do Sumário (espelhar títulos do documento) ---
 
-% Capítulos: negrito (igual \ABNTEXchapterfont)
-\renewcommand{\cftchapterfont}{\rmfamily\bfseries}
-\renewcommand{\cftchapterpagefont}{\rmfamily\bfseries}
-% Seções: sem negrito, maiúsculas (igual \ABNTEXsectionfont + section=TITLE)
-\renewcommand{\cftsectionfont}{\rmfamily\mdseries\MakeUppercase}
-\renewcommand{\cftsectionpagefont}{\rmfamily}
-% Subseções: negrito (igual \ABNTEXsubsectionfont)
-\renewcommand{\cftsubsectionfont}{\rmfamily\bfseries}
-\renewcommand{\cftsubsectionpagefont}{\rmfamily\bfseries}
-
-% SubSubseções: negrito (igual \ABNTEXsubsectionfont)
-\renewcommand{\cftsubsubsectionfont}{\rmfamily\mdseries}
-\renewcommand{\cftsubsubsectionpagefont}{\rmfamily}
+% Seções: negrito, maiúsculas (recebem o estilo dos capítulos)
+\renewcommand{\cftsectionfont}{\rmfamily\bfseries\MakeUppercase}
+\renewcommand{\cftsectionpagefont}{\rmfamily\bfseries}
+% Subseções: sem negrito (recebem o estilo das seções antigas)
+\renewcommand{\cftsubsectionfont}{\rmfamily\mdseries\MakeUppercase}
+\renewcommand{\cftsubsectionpagefont}{\rmfamily}
+% SubSubseções: negrito (recebem o estilo das subseções antigas)
+\renewcommand{\cftsubsubsectionfont}{\rmfamily\bfseries}
+\renewcommand{\cftsubsubsectionpagefont}{\rmfamily\bfseries}
 
 
 
@@ -147,12 +119,12 @@
 \newcommand{\quadroname}{Quadro}
 \newcommand{\listofquadrosname}{Lista de quadros}
 
-\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newfloat{quadro}{loq}{\quadroname}
 \newlistof{listofquadros}{loq}{\listofquadrosname}
 \newlistentry{quadro}{loq}{0}
 
 
-%\counterwithout{quadro}{chapter}
+%\counterwithout{quadro}{section}
 \renewcommand{\cftquadroname}{\quadroname\space}
 \renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
 \setfloatlocations{quadro}{hbtp}
@@ -231,9 +203,9 @@
 
 \renewenvironment{resumo}[1][\resumoname]{%
    \phantomsection
-   \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
-   \renewcommand{\abstractnamefont}{\chaptitlefont}
-   \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
+   \addcontentsline{toc}{section}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+   \renewcommand{\abstractnamefont}{\ABNTEXsectionfont\ABNTEXsectionfontsize}
+   \renewcommand{\abstractname}{\ABNTEXsectionupperifneeded{#1}}
    \begin{abstract}
 }{\end{abstract}\PRIVATEclearpageifneeded}
 
@@ -260,8 +232,8 @@
 \newenvironment{apresentacao}[1][Apresentação]{%
   \cleardoublepage
   \phantomsection
-  \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
-  \chapter*[#1]{#1}
+  \addcontentsline{toc}{section}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+  \section*[#1]{#1}
 }{}
 
 
