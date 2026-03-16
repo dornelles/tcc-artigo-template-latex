@@ -239,7 +239,7 @@
   \cleardoublepage
   \phantomsection
   \addcontentsline{toc}{section}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
-  \section*[#1]{#1}
+  \section*{#1}
 }{}
 
 
@@ -443,3 +443,110 @@
 % ==============================================================================
 % FIM DAS CUSTOMIZAÇÕES PARA A UNIVERSIDADE UNIJUÍ
 % ==============================================================================
+
+
+
+
+
+% ==============================================================================
+% CONFIGURAÇÃO DA MARCA D'ÁGUA
+% ==============================================================================
+
+% Marca d'água diagonal em todas as páginas indicando que é um template tutorial
+% --- Pacotes para Marca d'água (template tutorial) ---
+\usepackage{fontawesome5}       % ícones (ex.: \faWarning)
+\usepackage[firstpage=false]{draftwatermark}  % marca d'água em todas as páginas
+\usepackage{tikz}               % para a página de créditos
+\usepackage{mdframed}           % caixas decorativas na página de créditos
+\usepackage{qrcode}             % QR code (opcional)
+
+% Oculta a marca d'água por padrão (caso \imprimirmarcadagua não seja chamado)
+\DraftwatermarkOptions{stamp=false, text={}}
+
+\newcommand{\imprimirmarcadagua}{
+  \DraftwatermarkOptions{
+      stamp=true,
+      text={TEMPLATE TUTORIAL},
+      scale=0.55,
+      angle=45,
+      color=gray!18,       % cinza bem claro para não atrapalhar a leitura
+      fontsize=72pt,
+    }
+}
+
+\newcommand{\imprimirpaginadecreditos}{
+
+\clearpage
+    \thispagestyle{empty}
+    \begin{tikzpicture}[remember picture, overlay]
+        % Fundo superior colorido
+        \fill[blue!80!black] (current page.north west) rectangle
+            ([yshift=-5cm] current page.north east);
+        % Faixa diagonal decorativa
+        \fill[blue!60!cyan, opacity=0.5]
+            ([yshift=-4.5cm] current page.north west) --
+            ([yshift=-6cm]   current page.north west) --
+            ([yshift=-4.5cm] current page.north east) --
+            ([yshift=-3cm]   current page.north east) -- cycle;
+        % Fundo inferior (restante da página)
+        \fill[gray!8] (current page.south west) rectangle
+            ([yshift=-5cm] current page.north east);
+    \end{tikzpicture}
+    %
+    % --- Conteúdo da página ---
+    \vspace*{-2.5cm}
+    \begin{center}
+        % Título no fundo azul
+        {\color{white}\fontsize{28}{34}\selectfont\bfseries TEMPLATE TUTORIAL}\\[4pt]
+        {\color{blue!20}\fontsize{14}{18}\selectfont Artigo / TCC}\\[2pt]
+        {\color{white!80!gray}\fontsize{11}{14}\selectfont conforme normas ABNT -- UNIJUÍ}
+    \end{center}
+    %
+    \vspace{3.5cm}
+    %
+    % Caixa de aviso ao aluno
+    \begin{mdframed}[
+        backgroundcolor=yellow!15,
+        linecolor=orange!70!black,
+        linewidth=1.5pt,
+        innerleftmargin=12pt,
+        innerrightmargin=12pt,
+        innertopmargin=10pt,
+        innerbottommargin=10pt
+    ]
+        {\large\bfseries\color{orange!80!black} \faExclamationTriangle{} ATENÇÃO -- LEIA ANTES DE USAR}\\[6pt]
+        Este arquivo é um {\bfseries template tutorial} para a elaboração do Trabalho de Conclusão de curso (Artigo / TCC)
+        da UNIJUÍ, elaborado para os cursos de Ciência da Computação, Engenharia de Software e Inteligência Artificial. Ao longo do documento, você encontrará \textbf{instruções} que explicam \textbf{o que escrever} em cada seção.\\[4pt]
+        {\bfseries Ao redigir seu próprio texto:}
+        \vspace{-2mm}
+        \begin{itemize}[leftmargin=1.5em, itemsep=1pt]
+            \item Substitua todos os textos de exemplo pelo seu conteúdo;
+            \item Remova as instruções que não fazem parte do trabalho final;
+            \item Preencha corretamente os dados cadastrais na seção de dados do trabalho
+                  no arquivo \texttt{main.tex};
+            \item Compile o documento ao menos duas vezes para gerar corretamente
+                  sumário, listas e referências cruzadas.
+        \end{itemize}
+        \vspace{-3mm}
+        \textbf{A marca d'água} ``\textit{TEMPLATE TUTORIAL}'' é exclusiva deste PDF e não consta no projeto LaTeX original. Obtenha a versão atualizada em:
+        https://github.com/dornelles/tcc-artigo-template-latex.\\[1pt]
+        \end{mdframed}
+    %
+    \vfill
+    %
+    % Rodapé com créditos
+    \begin{center}
+        \rule{0.8\textwidth}{0.4pt}\\[6pt]
+        {\small\bfseries Template desenvolvido e mantido por:}\\[3pt]
+        {\normalsize\bfseries Prof. Eldair F. Dornelles}\\[2pt]
+        {\small Universidade Regional do Noroeste do Estado do Rio Grande do Sul -- UNIJUÍ}\\[1pt]
+        {\small Campus Ijuí}\\[4pt]
+        {\small \texttt{eldair.dornelles@unijui.edu.br}}\\[6pt]
+        {\footnotesize Sugestões de melhoria são bem-vindas. Compartilhe com colegas!}\\[4pt]
+        \rule{0.8\textwidth}{0.4pt}\\[3pt]
+        {\scriptsize Baseado no \textbf{abnTeX2} -- Suporte a normas ABNT para \LaTeX}
+    \end{center}
+    \vspace{0.5cm}
+\clearpage
+
+}
