@@ -33,12 +33,27 @@ Apresente a estrutura técnica. Utilize diagramas para representar a lógica,
 como na \autoref{fig:arquitetura}. Explique a racionalidade por trás da modelagem.
 
 \begin{figure}[htb]
-    \caption{\label{fig:arquitetura}Arquitetura da Solução Proposta}
     \centering
-    \includegraphics[width=0.6\textwidth]{figuras/05-desenvolvimento/img-exemplo.png}
-    \legend{Fonte: Própria do autor (2026).}
+    \begin{minipage}{0.5\textwidth}
+        \caption{\label{fig:arquitetura}Arquitetura da Solução Proposta}
+        \includegraphics[width=\textwidth]{figuras/05-desenvolvimento/img-exemplo.png}
+        \par
+        \legend{Fonte: Própria do autor (2026).}
+    \end{minipage}
 \end{figure}
 
+
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{0.5\textwidth}
+        \caption{\label{fig:arquitetura}Arquitetura da Solução Proposta}
+        \includegraphics[width=\textwidth]{figuras/05-desenvolvimento/img-exemplo.png}
+        \par
+        \legend{Fonte: \citeonline[p.~98]{linden2012}.}
+    \end{minipage}
+\end{figure}
+
+% \citeonline{}Silva et. al (ano, p. xx)
 %-------------------------------------------------------------------------------
 % Implementação
 %-------------------------------------------------------------------------------
@@ -78,17 +93,19 @@ apresentar métricas comparativas ou resultados de testes.
 \begin{table}[htb]
     \centering
     \ABNTEXfontereduzida
-    \caption{Comparativo de Desempenho da Solução}
-    \label{tab:resultados-testes}
-    \begin{tabular}{lcc}
-        \toprule
-        \textbf{Cenário} & \textbf{Tempo de Processamento} & \textbf{Consumo de Memória} \\
-        \midrule
-        Algoritmo A & 120ms & 45MB \\
-        Proposta B & 85ms & 32MB \\
-        \bottomrule
-    \end{tabular}
-    \legend{Fonte: Própria do autor (2026).}
+    \begin{minipage}{0.6\textwidth}
+        \caption{Comparativo de Desempenho da Solução}
+        \label{tab:resultados-testes}
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Cenário} & \textbf{Tempo de Processamento} & \textbf{Consumo de Memória} \\
+            \midrule
+            Algoritmo A & 120ms & 45MB \\
+            Proposta B & 85ms & 32MB \\
+            \bottomrule
+        \end{tabular}
+        \legend{Fonte: Própria do autor (2026).}
+    \end{minipage}
 \end{table}
 
 % --- Quadros (Dados Textuais) ---
@@ -98,17 +115,19 @@ requisitos atendidos ou descrever itens qualitativos.
 
 \begin{quadro}[htb]
     \centering
-    \caption{\label{qdr:comparativo}Comparativo Qualitativo de Funcionalidades}
-    \begin{tabular}{|l|c|c|}
-        \hline
-        \textbf{Recurso} & \textbf{Sistema Antigo} & \textbf{Solução Proposta} \\
-        \hline
-        Criptografia & Não possui & AES-256 \\
-        \hline
-        Sincronização & Manual & Automática \\
-        \hline
-    \end{tabular}
-    \legend{Fonte: Própria do autor (2026).}
+    \begin{minipage}{0.6\textwidth}
+        \caption{\label{qdr:comparativo}Comparativo Qualitativo de Funcionalidades}
+        \begin{tabular}{|l|c|c|}
+            \hline
+            \textbf{Recurso} & \textbf{Sistema Antigo} & \textbf{Solução Proposta} \\
+            \hline
+            Criptografia & Não possui & AES-256 \\
+            \hline
+            Sincronização & Manual & Automática \\
+            \hline
+        \end{tabular}
+        \legend{Fonte: Própria do autor (2026).}
+    \end{minipage}
 \end{quadro}
 
 A discussão deve ser crítica: se algum resultado foi negativo ou inesperado,
