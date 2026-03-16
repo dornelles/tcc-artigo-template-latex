@@ -4,7 +4,7 @@
 %%
 %% Template desenvolvido e mantido por Prof. Eldair F. Dornelles
 %% A versão mais atualizada deste template pode ser obtida no GitHub:
-%% https://github.com/dornelles/relatorio-de-estagio-template-latex
+%% https://github.com/dornelles/tcc-artigo-template-latex
 %% Qualquer sugestão de melhoria será bem vinda, 
 %% Contato pelo e-mail: eldair.dornelles@unijui.edu.br
 %% =============================================================================
@@ -111,6 +111,16 @@
   \centering\ABNTEXchapterfont\ABNTEXchapterfontsize\ABNTEXchapterupperifneeded{#1}%
 }
 \renewcommand{\printchapternonum}{\centering}
+
+% --- Correção: restaurar a formatação para apêndices e anexos ---
+\AtBeginEnvironment{apendicesenv}{
+  \renewcommand{\printchapternum}{\space\thechapter}
+  \renewcommand{\afterchapternum}{\space--\space}
+}
+\AtBeginEnvironment{anexosenv}{
+  \renewcommand{\printchapternum}{\space\thechapter}
+  \renewcommand{\afterchapternum}{\space--\space}
+}
 
 % --- Formatação do Sumário (espelhar títulos do documento) ---
 
