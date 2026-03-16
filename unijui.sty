@@ -98,10 +98,6 @@
   \counterwithout{figure}{chapter}
   \counterwithout{table}{chapter}
   \counterwithout{quadro}{chapter}
-
-  % Hiding all heading numbers in document (redundant but safe)
-  % Hiding all heading numbers in document (redundant but safe)
-  % \setcounter{secnumdepth}{-1}
   
   % Ocultar numeração apenas no Sumário (não afeta figuras/tabelas pois usam .lof/.lot)
   \addtocontents{toc}{\protect\renewcommand{\protect\numberline}[1]{}}
@@ -160,18 +156,32 @@
 % Caption = título acima do float (memoir)
 \captionnamefont{\footnotesize}     % "Figura X –" em tamanho 10
 \captiontitlefont{\footnotesize}    % texto do título em tamanho 10
+\captionstyle{\raggedright}         % Alinhar a caption à esquerda
+\captionsetup{singlelinecheck=false, justification=raggedright}
 
 % --- Espaçamento entre caption/legend e o conteúdo ---
-\setlength{\abovecaptionskip}{6pt}  % espaço acima do caption (entre texto e caption)
-\setlength{\belowcaptionskip}{4pt}  % espaço abaixo do caption (entre caption e conteúdo)
+\setlength{\abovecaptionskip}{2pt}  % espaço acima do caption (entre texto e caption)
+\setlength{\belowcaptionskip}{2pt}  % espaço abaixo do caption (entre caption e conteúdo)
+\setlength{\textfloatsep}{15pt} % espaço entre a figura e o texto do documento
 
 % Legend = fonte abaixo do float (abnTeX2 usa \legend{})
-% Usa \centering em vez de \begin{center} para evitar espaço vertical extra
-\renewcommand{\legend}[1]{\par\vspace{4pt}{\centering\footnotesize #1\par}}
+% Alinhar a legend à esquerda
+\renewcommand{\legend}[1]{\par\vspace{1pt}{\raggedright\footnotesize #1\par}}
 
 % ==============================================================================
 % COMANDOS PARA INFORMAÇÕES DO TRABALHO
 % ==============================================================================
+\providecommand{\imprimirtituloemingles}{}
+\newcommand{\tituloemingles}[1]{#1}
+\renewcommand{\tituloemingles}[1]{\def\imprimirtituloemingles{#1}}
+
+\providecommand{\imprimirsubtitulo}{}
+\newcommand{\subtitulo}[1]{#1}
+\renewcommand{\subtitulo}[1]{\def\imprimirsubtitulo{#1}}
+
+\providecommand{\imprimirsubtituloemingles}{}
+\newcommand{\subtituloemingles}[1]{#1}
+\renewcommand{\subtituloemingles}[1]{\def\imprimirsubtituloemingles{#1}}
 % --- Orientador ---
 \renewcommand{\orientadorname}{Orientador(a):}
 
@@ -183,6 +193,11 @@
 % --- Professor da banca ---
 \newcommand{\professordabanca}[1]{#1}
 \renewcommand{\professordabanca}[1]{\def\imprimirprofessordabanca{#1}}
+
+% --- Autores para o artigo ---
+\providecommand{\imprimirautoresartigo}{}
+\newcommand{\autoresartigo}[1]{#1}
+\renewcommand{\autoresartigo}[1]{\def\imprimirautoresartigo{#1}}
 
 % --- Campus ---
 \newcommand{\campus}[1]{#1}
@@ -202,18 +217,30 @@
 \newcommand{\submetidoabanca}{, submetido à aprovação da banca examinadora composta pelos seguintes membros:}
 
 % --- Resumo em português ---
+\providecommand{\imprimirresumo}{}
 \newcommand{\resumoemportugues}[1]{#1}
 \renewcommand{\resumoemportugues}[1]{\def\imprimirresumo{#1}}
 
+\renewenvironment{resumo}[1][\resumoname]{%
+   \phantomsection
+   \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+   \renewcommand{\abstractnamefont}{\chaptitlefont}
+   \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
+   \begin{abstract}
+}{\end{abstract}\PRIVATEclearpageifneeded}
+
 % --- Palavras-chave em português ---
+\providecommand{\imprimirpalavraschave}{}
 \newcommand{\palavraschaveemportugues}[1]{#1}
 \renewcommand{\palavraschaveemportugues}[1]{\def\imprimirpalavraschave{#1}}
 
 % --- Resumo em inglês ---
+\providecommand{\imprimirabstract}{}
 \newcommand{\resumoemingles}[1]{#1}
 \renewcommand{\resumoemingles}[1]{\def\imprimirabstract{#1}}
 
 % --- Palavras-chave em inglês ---
+\providecommand{\imprimirkeywords}{}
 \newcommand{\palavraschaveemingles}[1]{#1}
 \renewcommand{\palavraschaveemingles}[1]{\def\imprimirkeywords{#1}}
 
@@ -228,7 +255,6 @@
   \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
   \chapter*[#1]{#1}
 }{}
-
 
 
 % ==============================================================================
@@ -269,7 +295,7 @@
     \par
     \vspace{1.2cm}
     \vfill
-    \normalsize\MakeUppercase{\imprimirtitulo}
+    \normalsize\MakeUppercase{\imprimirtitulo}\ifthenelse{\equal{\imprimirsubtitulo}{}}{}{: \imprimirsubtitulo}
     \vfill \vfill \vfill
     \normalsize\imprimirlocal\\[1mm]
     \normalsize\imprimirdata
@@ -289,7 +315,7 @@
     \vspace*{5mm}
     \vfill \vfill
 
-    \normalsize\MakeUppercase{\imprimirtitulo}
+    \normalsize\MakeUppercase{\imprimirtitulo}\ifthenelse{\equal{\imprimirsubtitulo}{}}{}{: \imprimirsubtitulo}
  
     \vfill
     \abntex@ifnotempty{\imprimirpreambulo}{%
@@ -354,6 +380,67 @@
 }
 \makeatother
 
+
+% ==============================================================================
+% PÁGINA DE RESUMOS
+% ==============================================================================
+\newcommand{\imprimirpaginaresumos}{
+
+  \begin{center}
+    \ifthenelse{\equal{\imprimirtitulo}{}}{}{
+        \normalsize\MakeUppercase{\imprimirtitulo}\ifthenelse{\equal{\imprimirsubtitulo}{}}{}{: \imprimirsubtitulo}
+        \par
+    }
+
+    \ifthenelse{\equal{\imprimirtituloemingles}{}}{}{
+        \normalsize\MakeUppercase{\imprimirtituloemingles}\ifthenelse{\equal{\imprimirsubtituloemingles}{}}{}{: \imprimirsubtituloemingles}
+        \par
+    }
+  \end{center}
+
+  % --- Autores ---
+  \ifthenelse{\equal{\imprimirautoresartigo}{}}{}{
+      \vspace{3mm}
+      % \begin{adjustwidth}{0.5\textwidth}{0cm}
+       
+      %   \begingroup
+         \begin{flushright} 
+          \setcounter{footnote}{0}
+          \renewcommand{\thefootnote}{\arabic{footnote}}
+          \let\thanks\footnote
+          \renewcommand{\and}{\\[1mm]}
+          \normalsize \imprimirautoresartigo
+        \end{flushright}
+      %   \endgroup
+      % \end{adjustwidth}
+    \vspace{3mm}
+  }
+
+  \ifthenelse{\equal{\imprimirresumo}{}}{}{
+      \begin{resumo}
+      \vspace{-\onelineskip}
+      \imprimirresumo \\
+      \noindent \textbf{Palavras-chave}: \imprimirpalavraschave
+      \end{resumo}
+  }
+
+  \ifthenelse{\equal{\imprimirabstract}{}}{}{
+      \ifthenelse{\equal{\imprimirresumo}{}}{}{
+          \noindent\rule{\textwidth}{0.4pt}% imprimir linha separando os dois resumos
+      }
+      % --- Resumo em inglês ---
+      \begin{otherlanguage*}{english}
+      \begin{resumo}[Abstract]
+          \vspace{-\onelineskip}
+          \vspace{1mm}
+          \imprimirabstract\\
+          \noindent \textbf{Keywords}: \imprimirkeywords
+      \end{resumo}
+      \end{otherlanguage*}
+  }
+
+  \ifthenelse{\equal{\imprimirresumo}{}\AND\equal{\imprimirabstract}{}}{}{\newpage}
+}
 
 % ==============================================================================
 % FIM DAS CUSTOMIZAÇÕES PARA A UNIVERSIDADE UNIJUÍ
