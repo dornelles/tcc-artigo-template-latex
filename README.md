@@ -22,6 +22,7 @@ A organização dos arquivos no projeto foi pensada para facilitar a manutençã
 * **`build-latex.sh`**: Script em bash para facilitar e automatizar a compilação do documento em ambientes Linux/macOS.
 * **Diretórios**:
   * `capitulos/`: Contém os arquivos `.tex` referentes a cada capítulo (Introdução, Metodologia, Desenvolvimento, etc.).
+  * `declaracoes/`: Contém declarações editoriais opcionais, como a declaração sobre o uso de IA generativa.
   * `apendices/` e `anexos/`: Diretórios destinados a arquivos de apêndices e anexos do trabalho.
   * `figuras/`: Pasta para armazenar as imagens e ilustrações utilizadas no documento.
 
